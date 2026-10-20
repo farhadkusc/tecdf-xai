@@ -68,10 +68,14 @@ def _split(n: int, y: np.ndarray, seed: int = 7, test_frac: float = 0.3):
     test_idx = []
     for label in (0, 1):
         pool = np.flatnonzero(y == label)
+        if len(pool) == 0:
+            continue
         rng.shuffle(pool)
         n_test = int(round(len(pool) * test_frac))
         test_idx.append(pool[:n_test])
         train_idx.append(pool[n_test:])
+    if not train_idx or not test_idx:
+        raise ValueError("split needs at least one training row and one test row")
     return np.concatenate(train_idx), np.concatenate(test_idx)
 
 
@@ -95,8 +99,8 @@ class Report:
     feature_names: list[str]
 
 
-def evaluate(seed: int = 7, attack_frac: float = 0.2) -> dict:
-    x, y, services = load()
+def evaluate_arrays(x: np.ndarray, y: np.ndarray, services: np.ndarray, seed: int = 7, attack_frac: float = 0.2) -> dict:
+    """Score a feature matrix. `x` is already transformed the way `load` transforms NSL-KDD."""
     train, test = _split(len(y), y, seed=seed)
     attack_rate = float(y[test].mean())
     majority_accuracy = max(attack_rate, 1.0 - attack_rate)
@@ -114,10 +118,11 @@ def evaluate(seed: int = 7, attack_frac: float = 0.2) -> dict:
     for i in chosen:
         current = services[i]
         options = catalog[catalog != current]
+        if len(options) == 0:
+            continue
         attacked[i] = options[int(rng.integers(0, len(options)))]
     attacked_p = np.array([rate.get(attacked[i], global_rate) for i in test])
 
-    # Attribution is the standardized feature times its weight.
     Z = (x[test] - mu) / sd
     attr = Z * w
     noise = rng.normal(0, 0.15, size=x[test].shape)
@@ -127,14 +132,9 @@ def evaluate(seed: int = 7, attack_frac: float = 0.2) -> dict:
     num = np.sum(attr * attr2, axis=1)
     den = np.linalg.norm(attr, axis=1) * np.linalg.norm(attr2, axis=1) + 1e-8
     cosine = np.clip(num / den, -1.0, 1.0)
-    # Paper-form ratio, clipped. D is the L2 gap of the attribution vectors.
     paper_r = np.clip(1.0 - np.linalg.norm(attr - attr2, axis=1) / delta, 0.0, 1.0)
 
     return {
-        "dataset": "NSL-KDD KDDTrain+_20Percent",
-        "source": "https://github.com/tuanio/nsl_kdd (20% training split of the UNB NSL-KDD release)",
-        "citation": "Tavallaee, Bagheri, Lu, Ghorbani. A Detailed Analysis of the KDD CUP 99 Data Set. IEEE CISDA 2009.",
-        "split": "stratified 70/30, seed 7, training neighborhoods only",
         "n_rows": int(len(y)),
         "n_train": int(len(train)),
         "n_test": int(len(test)),
@@ -150,5 +150,16 @@ def evaluate(seed: int = 7, attack_frac: float = 0.2) -> dict:
         "explanation_paper_R_e": round(float(paper_r.mean()), 4),
         "feature_names": list(NUMERIC),
         "logistic_weights_standardized": {name: round(float(coef), 4) for name, coef in zip(NUMERIC, w)},
+    }
+
+
+def evaluate(seed: int = 7, attack_frac: float = 0.2) -> dict:
+    x, y, services = load()
+    return {
+        "dataset": "NSL-KDD KDDTrain+_20Percent",
+        "source": "https://github.com/tuanio/nsl_kdd (20% training split of the UNB NSL-KDD release)",
+        "citation": "Tavallaee, Bagheri, Lu, Ghorbani. A Detailed Analysis of the KDD CUP 99 Data Set. IEEE CISDA 2009.",
+        "split": "stratified 70/30, seed 7, training neighborhoods only",
+        **evaluate_arrays(x, y, services, seed=seed, attack_frac=attack_frac),
         "disclaimer": "One public split. Not CICIDS2017 and not a human analyst study.",
     }

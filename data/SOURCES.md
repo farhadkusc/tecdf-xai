@@ -9,3 +9,5 @@ That repository redistributes the University of New Brunswick NSL-KDD 20% traini
 Tavallaee, M., Bagheri, E., Lu, W., and Ghorbani, A. A. "A Detailed Analysis of the KDD CUP 99 Data Set." *IEEE Symposium on Computational Intelligence for Security and Defense Applications*, 2009.
 
 The file is stored as fetched. The loader does not rename columns except to attach the standard names to the ten indices it uses.
+
+`data/dummy/flows.csv` is a separate synthetic fixture. It is not NSL-KDD and it is not traffic from the institutions named in that file.

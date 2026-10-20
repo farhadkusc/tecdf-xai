@@ -1,0 +1,114 @@
+{
+  "kind": "synthetic-fixture",
+  "package": "tecdf-xai",
+  "package_version": "0.2.1",
+  "statement": "Synthetic fixture. Flows are not traffic from the named organization. Do not cite this object as an experimental result.",
+  "n_organizations": 106,
+  "counts": {
+    "federal-department": 15,
+    "federal-component": 18,
+    "national-laboratory": 17,
+    "ibm": 10,
+    "research-center": 46
+  },
+  "n_flows": 2120,
+  "overall": {
+    "n_rows": 2120,
+    "n_train": 1484,
+    "n_test": 636,
+    "test_attack_rate": 0.4277,
+    "majority_class_accuracy": 0.5723,
+    "graph_service_neighborhood": {
+      "accuracy": 0.7091,
+      "precision": 0.6355,
+      "recall": 0.75,
+      "f1": 0.688,
+      "average_precision": 0.593
+    },
+    "numeric_logistic": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "average_precision": 1.0
+    },
+    "graph_after_service_rewire": {
+      "accuracy": 0.6541,
+      "precision": 0.5823,
+      "recall": 0.6765,
+      "f1": 0.6259,
+      "average_precision": 0.5105,
+      "fraction_rewired": 0.2
+    },
+    "explanation_cosine_stability": 0.8453,
+    "explanation_paper_R_e": 0.0021,
+    "feature_names": [
+      "duration",
+      "src_bytes",
+      "dst_bytes",
+      "count",
+      "srv_count",
+      "serror_rate",
+      "same_srv_rate",
+      "dst_host_count",
+      "dst_host_srv_count",
+      "dst_host_serror_rate"
+    ],
+    "logistic_weights_standardized": {
+      "duration": 0.8073,
+      "src_bytes": 0.937,
+      "dst_bytes": 0.2467,
+      "count": 0.9536,
+      "srv_count": 0.5246,
+      "serror_rate": 0.9714,
+      "same_srv_rate": -0.6705,
+      "dst_host_count": 0.6373,
+      "dst_host_srv_count": 0.0472,
+      "dst_host_serror_rate": 0.9001
+    }
+  },
+  "by_class": {
+    "federal-component": {
+      "n_rows": 360,
+      "majority_class_accuracy": 0.5926,
+      "graph_accuracy": 0.7037,
+      "logistic_accuracy": 1.0,
+      "graph_average_precision": 0.5048
+    },
+    "federal-department": {
+      "n_rows": 300,
+      "majority_class_accuracy": 0.5333,
+      "graph_accuracy": 0.7333,
+      "logistic_accuracy": 1.0,
+      "graph_average_precision": 0.7561
+    },
+    "ibm": {
+      "n_rows": 200,
+      "majority_class_accuracy": 0.5833,
+      "graph_accuracy": 0.7167,
+      "logistic_accuracy": 1.0,
+      "graph_average_precision": 0.5579
+    },
+    "national-laboratory": {
+      "n_rows": 340,
+      "majority_class_accuracy": 0.5392,
+      "graph_accuracy": 0.8333,
+      "logistic_accuracy": 1.0,
+      "graph_average_precision": 0.7489
+    },
+    "research-center": {
+      "n_rows": 920,
+      "majority_class_accuracy": 0.5906,
+      "graph_accuracy": 0.7609,
+      "logistic_accuracy": 1.0,
+      "graph_average_precision": 0.6621
+    }
+  },
+  "klass_row_counts": {
+    "federal-department": 300,
+    "federal-component": 360,
+    "national-laboratory": 340,
+    "ibm": 200,
+    "research-center": 920
+  }
+}

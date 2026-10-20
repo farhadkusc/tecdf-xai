@@ -1,6 +1,6 @@
 # Technical report
 
-**Version 0.2.0.** Author: Md Farhad Kabir.
+**Version 0.2.1.** Author: Md Farhad Kabir.
 
 ## Graph
 
@@ -25,3 +25,7 @@ clipped to [0, 1]. Mean \(R_e\) is 0.118 because the weight vector amplifies som
 ## Split
 
 Seed 7, 30% test, stratified on the binary label (normal versus any attack). There is no second external test file in this package; the official NSL-KDD test split is a known distribution shift and is not claimed here.
+
+## Synthetic fixtures
+
+`data/dummy/flows.csv` is a planted service neighborhood, twenty rows per scenario label. The labels are the same federal, IBM, and research-center registry used by the other packages. `evaluate_arrays` scores it. The NSL-KDD numbers in `evaluation.json` are not recomputed from this file.

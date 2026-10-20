@@ -1,3 +1,6 @@
-"""TECDF research prototype, v0.2.0. NSL-KDD 20% service graph."""
+"""TECDF research prototype, v0.2.1. NSL-KDD 20% service graph.
 
-__version__ = "0.2.0"
+Synthetic flows live under data/dummy and are not packet captures.
+"""
+
+__version__ = "0.2.1"

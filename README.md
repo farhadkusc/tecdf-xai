@@ -2,7 +2,7 @@
 
 A service-neighborhood explanation for NSL-KDD, with a numeric baseline and a service-rewire attack.
 
-Author: **Md Farhad Kabir**. Package **0.2.0**.
+Author: **Md Farhad Kabir**. Package **0.2.1**.
 
 ## Data
 
@@ -34,6 +34,17 @@ python3 benchmarks/plot_results.py
 ```
 
 The chart is [docs/figures/results.svg](docs/figures/results.svg).
+
+## Synthetic fixtures
+
+`data/dummy/flows.csv` has twenty synthetic flows for each organization in the same registry the other two packages use: cabinet departments, DOE laboratories, federal components, IBM units, and research centers. The service field is planted. It is not a capture from those institutions.
+
+```bash
+python3 -m unittest tests/test_dummy.py
+python3 benchmarks/run_dummy.py
+```
+
+`benchmarks/results/dummy_evaluation.json` is the fixture check. The table above is only the NSL-KDD split.
 
 ## What this is not
 
