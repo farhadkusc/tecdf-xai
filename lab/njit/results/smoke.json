@@ -1,0 +1,59 @@
+{
+  "package": "tecdf-xai",
+  "package_version": "0.2.3",
+  "profile": "smoke",
+  "host": "hds-ssx0maqdcfqj",
+  "ran_on_wulver": false,
+  "purpose": "Seed and service-rewire sweep on the NSL-KDD 20% file, with a label-permutation null for the service graph.",
+  "not_a_measurement_of": "NJIT hardware, CICIDS2017, UNSW-NB15, or an analyst study.",
+  "n_jobs": 2,
+  "workers": 2,
+  "elapsed_sec": 0.619,
+  "summary": [
+    {
+      "attack_frac": 0.2,
+      "n_seeds": 2,
+      "graph_accuracy_mean": 0.9141,
+      "logistic_accuracy_mean": 0.9471,
+      "rewire_accuracy_mean": 0.8234,
+      "rewire_ap_mean": 0.6463,
+      "accuracy_drop_mean": 0.0907
+    }
+  ],
+  "permutation_null": {
+    "split_seed": 7,
+    "n_permutations": 20,
+    "observed_graph_accuracy": 0.9131,
+    "null_mean": 0.5305,
+    "null_max": 0.5397,
+    "fraction_null_ge_observed": 0.0
+  },
+  "jobs": [
+    {
+      "seed": 0,
+      "attack_frac": 0.2,
+      "graph_accuracy": 0.9147,
+      "graph_f1": 0.9057,
+      "graph_ap": 0.9522,
+      "logistic_accuracy": 0.9455,
+      "logistic_f1": 0.941,
+      "logistic_ap": 0.98,
+      "rewire_accuracy": 0.8191,
+      "rewire_ap": 0.6358,
+      "majority_class_accuracy": 0.5339
+    },
+    {
+      "seed": 1,
+      "attack_frac": 0.2,
+      "graph_accuracy": 0.9135,
+      "graph_f1": 0.9043,
+      "graph_ap": 0.9486,
+      "logistic_accuracy": 0.9487,
+      "logistic_f1": 0.9445,
+      "logistic_ap": 0.9798,
+      "rewire_accuracy": 0.8277,
+      "rewire_ap": 0.6568,
+      "majority_class_accuracy": 0.5339
+    }
+  ]
+}

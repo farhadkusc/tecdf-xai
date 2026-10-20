@@ -2,7 +2,7 @@
 
 A service-neighborhood explanation for NSL-KDD, with a numeric baseline and a service-rewire attack.
 
-Author: **Md Farhad Kabir**. Package **0.2.2**.
+Author: **Md Farhad Kabir**. Package **0.2.3**.
 
 ## Data
 
@@ -51,3 +51,7 @@ Grey Harbor (`SYN-EXERCISE-GREY-HARBOR`) spoofs the service field of malicious f
 ## What this is not
 
 Not a claim that graph attention beats a linear model on intrusion detection. On this file it does not. The graph is still the object that the service-rewire attack hits, which is the point of the adversarial layer in the concept paper.
+
+## NJIT Wulver
+
+`lab/njit/` refits the NSL-KDD models across 48 seeds and five rewire fractions, then runs a 400-draw label permutation. Submit with `sbatch lab/njit/wulver.sbatch`. Instructions are in [lab/njit/README.md](lab/njit/README.md). The smoke file is not a Wulver measurement.
