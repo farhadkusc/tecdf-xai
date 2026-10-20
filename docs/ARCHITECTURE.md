@@ -10,4 +10,4 @@ flowchart LR
   A --> R[Cosine stability and paper R_e]
 ```
 
-Layers in the concept paper that are not in this repository: stakeholder-specific views, an audit log of analyst overrides, and a human timing study. They are not filled with placeholder scores.
+The detector is one graph-attention layer over same-service neighbors. The service-rate score and the numeric logistic are the baselines beside it.

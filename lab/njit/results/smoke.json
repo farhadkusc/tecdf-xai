@@ -7,7 +7,7 @@
   "purpose": "Seed and service-rewire sweep on the NSL-KDD 20% file, with a label-permutation null for the service graph.",
   "n_jobs": 2,
   "workers": 2,
-  "elapsed_sec": 0.6,
+  "elapsed_sec": 4.223,
   "summary": [
     {
       "attack_frac": 0.2,

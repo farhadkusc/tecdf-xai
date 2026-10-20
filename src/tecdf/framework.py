@@ -15,6 +15,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from .gat import fit_gat
 from .nsl import NUMERIC, load
 
 
@@ -133,6 +134,7 @@ def evaluate_arrays(x: np.ndarray, y: np.ndarray, services: np.ndarray, seed: in
     den = np.linalg.norm(attr, axis=1) * np.linalg.norm(attr2, axis=1) + 1e-8
     cosine = np.clip(num / den, -1.0, 1.0)
     paper_r = np.clip(1.0 - np.linalg.norm(attr - attr2, axis=1) / delta, 0.0, 1.0)
+    gat = fit_gat(x, y, services, train, test, seed=seed)
 
     return {
         "n_rows": int(len(y)),
@@ -140,6 +142,12 @@ def evaluate_arrays(x: np.ndarray, y: np.ndarray, services: np.ndarray, seed: in
         "n_test": int(len(test)),
         "test_attack_rate": round(attack_rate, 4),
         "majority_class_accuracy": round(majority_accuracy, 4),
+        "graph_attention": {
+            **_metrics(y[test], gat["p_test"]),
+            "paper_R_e": round(float(gat["paper_r_e"]), 4),
+            "attention_l2": round(float(gat["attention_l2"]), 4),
+        },
+        "graph_attention_after_rewire": _metrics(y[test], gat["p_adv"]),
         "graph_service_neighborhood": _metrics(y[test], graph_p),
         "numeric_logistic": _metrics(y[test], logit_p),
         "graph_after_service_rewire": {

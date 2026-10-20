@@ -18,6 +18,22 @@
     "n_test": 636,
     "test_attack_rate": 0.4277,
     "majority_class_accuracy": 0.5723,
+    "graph_attention": {
+      "accuracy": 0.6824,
+      "precision": 0.6136,
+      "recall": 0.6949,
+      "f1": 0.6517,
+      "average_precision": 0.6364,
+      "paper_R_e": 0.9946,
+      "attention_l2": 0.3538
+    },
+    "graph_attention_after_rewire": {
+      "accuracy": 0.4623,
+      "precision": 0.3892,
+      "recall": 0.4522,
+      "f1": 0.4184,
+      "average_precision": 0.4074
+    },
     "graph_service_neighborhood": {
       "accuracy": 0.7091,
       "precision": 0.6355,

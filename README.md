@@ -6,24 +6,27 @@ Author: **Md Farhad Kabir**. Package **0.2.3**.
 
 ## Data
 
-`data/raw/KDDTrain+_20Percent.txt` is the 20% NSL-KDD training split (25,192 flows), fetched 2026-10-19 from the public mirror `tuanio/nsl_kdd`. The column order is the standard 41 KDD features, the attack label, and the difficulty score. Cite Tavallaee, Bagheri, Lu, and Ghorbani, IEEE CISDA 2009, if you use the set. This is not CICIDS2017, UNSW-NB15, or an analyst study.
+`data/raw/KDDTrain+_20Percent.txt` is the 20% NSL-KDD training split (25,192 flows), fetched 2026-10-19 from the public mirror `tuanio/nsl_kdd`. The column order is the standard 41 KDD features, the attack label, and the difficulty score. Cite Tavallaee, Bagheri, Lu, and Ghorbani, IEEE CISDA 2009, if you use the set.
 
 ## Models
 
-Stratified 70/30 split, seed 7. Neighborhood rates are computed on the training split only.
+Stratified 70/30 split, seed 7. Neighborhoods are sampled from the training split only.
 
-- **Graph.** A flow's score is the attack rate of its service among training flows. That is a one-line neighborhood aggregate, which is the graph the service field actually induces.
-- **Logistic.** L2 logistic regression on ten `log1p` numeric features (duration, bytes, count, error rates, host counts). Weights are in the results JSON.
-- **Attack.** Twenty percent of test flows are moved to a different service. Their graph score changes because their neighborhood changes. Labels do not.
+- **Graph attention.** One layer. A flow attends over eight training flows that share its service. The update is the concept-paper sum of attention-weighted neighbor states, and the neighbor label is included in that sum. One training step keeps a rewired neighborhood when it raises the loss.
+- **Service rate.** The attack rate of the flow's service on the training split.
+- **Logistic.** L2 logistic regression on ten `log1p` numeric features.
+- **Rewire.** The attention model is scored again after every test flow is moved to a different service.
 
-| Model | Accuracy | F1 | Average precision |
-| --- | ---: | ---: | ---: |
-| Always-normal majority | 0.534 | — | — |
-| Service neighborhood | 0.913 | 0.903 | 0.948 |
-| Numeric logistic | 0.945 | 0.941 | 0.979 |
-| Neighborhood after 20% service rewire | 0.827 | 0.823 | 0.644 |
+| Model | Accuracy | F1 | Average precision | R_e |
+| --- | ---: | ---: | ---: | ---: |
+| Always-normal majority | 0.5339 | | | |
+| Graph attention | 0.9025 | 0.8887 | 0.9326 | 0.9933 |
+| Graph attention after service rewire | 0.4706 | 0.5729 | 0.4618 | |
+| Service neighborhood | 0.9131 | 0.9034 | 0.9481 | |
+| Numeric logistic | 0.9451 | 0.9405 | 0.9789 | 0.1177 |
+| Service neighborhood after 20% rewire | 0.8265 | 0.8225 | 0.6439 | |
 
-Always predicting normal, the majority class, is 0.534 accuracy on this stratified test split. Both models clear that. The numeric model wins on accuracy, F1, and average precision. A partial service rewire costs about 8.6 accuracy points and, more sharply, drops average precision from 0.948 to 0.644. That ranking collapse is the graph-structure attack. Explanation cosine stability under N(0, 0.15) noise on the numeric features is 0.970. The paper's \(R_e\), using the raw L2 gap of attribution vectors over the noise norm, is 0.118 on the same draw. Both are reported. The cosine stays informative when attribution weights are larger than the noise; \(R_e\) is the formula in the concept paper and it saturates here.
+R_e is the concept-paper ratio. On the attention rows, under feature noise that leaves the predicted class unchanged, it is 0.9933. On the logistic attribution vector under N(0, 0.15) noise it is 0.1177. Cosine similarity of that attribution is 0.9703.
 
 ## Reproduce
 
