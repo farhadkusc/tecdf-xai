@@ -2,7 +2,7 @@
 
 A service-neighborhood explanation for NSL-KDD, with a numeric baseline and a service-rewire attack.
 
-Author: **Md Farhad Kabir**. Package **0.2.3**.
+Author: **Md Farhad Kabir**. Package **0.2.4**.
 
 ## Data
 
@@ -12,21 +12,21 @@ Author: **Md Farhad Kabir**. Package **0.2.3**.
 
 Stratified 70/30 split, seed 7. Neighborhoods are sampled from the training split only.
 
-- **Graph attention.** One layer. A flow attends over eight training flows that share its service. The update is the concept-paper sum of attention-weighted neighbor states, and the neighbor label is included in that sum. One training step keeps a rewired neighborhood when it raises the loss.
-- **Service rate.** The attack rate of the flow's service on the training split.
+- **Graph attention.** A flow attends over 16 other training flows that share its service. The weight of a neighbor is a softmax over the dot product of the two standardized feature vectors. The classifier sees the flow's own features, the attention-weighted neighbor features, and the attention-weighted training label.
+- **Service rate.** The attack rate of the flow's service on the training split. Every training flow of that service is used, not a sample.
 - **Logistic.** L2 logistic regression on ten `log1p` numeric features.
-- **Rewire.** The attention model is scored again after every test flow is moved to a different service.
+- **Rewire.** The attention classifier is scored again after every test flow is moved to a different service. The weights are not refit.
 
-| Model | Accuracy | F1 | Average precision | R_e |
-| --- | ---: | ---: | ---: | ---: |
-| Always-normal majority | 0.5339 | | | |
-| Graph attention | 0.9025 | 0.8887 | 0.9326 | 0.9933 |
-| Graph attention after service rewire | 0.4706 | 0.5729 | 0.4618 | |
-| Service neighborhood | 0.9131 | 0.9034 | 0.9481 | |
-| Numeric logistic | 0.9451 | 0.9405 | 0.9789 | 0.1177 |
-| Service neighborhood after 20% rewire | 0.8265 | 0.8225 | 0.6439 | |
+| Model | Accuracy | Precision | Recall | F1 | Average precision | R_e |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Always-normal majority | 0.5339 | | | | | |
+| Graph attention | 0.9624 | 0.9687 | 0.9500 | 0.9593 | 0.9852 | 0.9001 |
+| Graph attention after a full service rewire | 0.6712 | 0.5960 | 0.9148 | 0.7218 | 0.9269 | |
+| Service neighborhood | 0.9131 | 0.9372 | 0.8720 | 0.9034 | 0.9481 | |
+| Numeric logistic | 0.9451 | 0.9507 | 0.9305 | 0.9405 | 0.9789 | 0.1177 |
+| Service neighborhood after 20% rewire | 0.8265 | 0.7862 | 0.8623 | 0.8225 | 0.6439 | |
 
-R_e is the concept-paper ratio. On the attention rows, under feature noise that leaves the predicted class unchanged, it is 0.9933. On the logistic attribution vector under N(0, 0.15) noise it is 0.1177. Cosine similarity of that attribution is 0.9703.
+Attention entropy on the test set is 2.459. A uniform distribution over 16 neighbors has entropy 2.773. The weights are not uniform. Under N(0, 0.15) feature noise, 99.59% of test rows keep their predicted class, and R_e on those attention rows is 0.9001. The same noise on the logistic attribution gives cosine similarity 0.9703 and R_e 0.1177. Moving every test flow to a different service drops attention accuracy from 0.9624 to 0.6712. Average precision falls only from 0.9852 to 0.9269, because the flow's own features remain in the classifier.
 
 ## Reproduce
 

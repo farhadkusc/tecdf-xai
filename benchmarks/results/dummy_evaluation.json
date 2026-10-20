@@ -1,7 +1,7 @@
 {
   "kind": "synthetic-fixture",
   "package": "tecdf-xai",
-  "package_version": "0.2.3",
+  "package_version": "0.2.4",
   "statement": "Synthetic fixture. Organization names are scenario labels.",
   "n_organizations": 106,
   "counts": {
@@ -19,20 +19,23 @@
     "test_attack_rate": 0.4277,
     "majority_class_accuracy": 0.5723,
     "graph_attention": {
-      "accuracy": 0.6824,
-      "precision": 0.6136,
-      "recall": 0.6949,
-      "f1": 0.6517,
-      "average_precision": 0.6364,
-      "paper_R_e": 0.9946,
-      "attention_l2": 0.3538
+      "accuracy": 0.9984,
+      "precision": 1.0,
+      "recall": 0.9963,
+      "f1": 0.9982,
+      "average_precision": 1.0,
+      "paper_R_e": 0.8743,
+      "class_unchanged_fraction": 1.0,
+      "attention_entropy": 2.1838,
+      "uniform_entropy": 2.7726,
+      "attention_l2": 0.3903
     },
     "graph_attention_after_rewire": {
-      "accuracy": 0.4623,
-      "precision": 0.3892,
-      "recall": 0.4522,
-      "f1": 0.4184,
-      "average_precision": 0.4074
+      "accuracy": 0.9921,
+      "precision": 0.9926,
+      "recall": 0.989,
+      "f1": 0.9908,
+      "average_precision": 0.9998
     },
     "graph_service_neighborhood": {
       "accuracy": 0.7091,

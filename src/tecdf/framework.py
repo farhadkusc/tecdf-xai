@@ -145,6 +145,9 @@ def evaluate_arrays(x: np.ndarray, y: np.ndarray, services: np.ndarray, seed: in
         "graph_attention": {
             **_metrics(y[test], gat["p_test"]),
             "paper_R_e": round(float(gat["paper_r_e"]), 4),
+            "class_unchanged_fraction": round(float(gat["class_unchanged_fraction"]), 4),
+            "attention_entropy": round(float(gat["attention_entropy"]), 4),
+            "uniform_entropy": round(float(gat["uniform_entropy"]), 4),
             "attention_l2": round(float(gat["attention_l2"]), 4),
         },
         "graph_attention_after_rewire": _metrics(y[test], gat["p_adv"]),

@@ -1,13 +1,13 @@
 {
   "package": "tecdf-xai",
-  "package_version": "0.2.3",
+  "package_version": "0.2.4",
   "profile": "smoke",
-  "host": "hds-ssx0maqdcfqj",
+  "host": "hds-6u865akbnfu3",
   "ran_on_wulver": false,
   "purpose": "Seed and service-rewire sweep on the NSL-KDD 20% file, with a label-permutation null for the service graph.",
   "n_jobs": 2,
   "workers": 2,
-  "elapsed_sec": 4.223,
+  "elapsed_sec": 1.473,
   "summary": [
     {
       "attack_frac": 0.2,
