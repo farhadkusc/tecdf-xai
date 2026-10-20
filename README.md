@@ -2,7 +2,7 @@
 
 A service-neighborhood explanation for NSL-KDD, with a numeric baseline and a service-rewire attack.
 
-Author: **Md Farhad Kabir**. Package **0.2.4**. The research draft is [docs/PAPER.md](docs/PAPER.md). The same text is `docs/XAI_Concept_Paper.docx`. Both are generated from `benchmarks/results/evaluation.json`.
+Author: **Md Farhad Kabir**. Package **0.2.4**. The research draft is [docs/PAPER.md](docs/PAPER.md), generated from `benchmarks/results/evaluation.json`.
 
 ## Data
 
