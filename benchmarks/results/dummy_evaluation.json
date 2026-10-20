@@ -1,7 +1,7 @@
 {
   "kind": "synthetic-fixture",
   "package": "tecdf-xai",
-  "package_version": "0.2.1",
+  "package_version": "0.2.2",
   "statement": "Synthetic fixture. Flows are not traffic from the named organization. Do not cite this object as an experimental result.",
   "n_organizations": 106,
   "counts": {
@@ -110,5 +110,39 @@
     "national-laboratory": 340,
     "ibm": 200,
     "research-center": 920
+  },
+  "attack_scenario": {
+    "exercise_id": "SYN-EXERCISE-GREY-HARBOR",
+    "title": "Grey Harbor",
+    "kind": "synthetic-exercise",
+    "statement": "Tabletop inject for tests. The adversary, the tool, the sites, and the events are fictional. Blue-cell identifiers are exercise roles, not breach reports. No listed organization was attacked. This file is not an incident report, an advisory, or a procedure.",
+    "spoofed_service": "domain_u",
+    "blue_cell": [
+      "FED-DOE",
+      "FED-CISA",
+      "FEDLAB-INL",
+      "IBM-XFORCE",
+      "IBM-FEDERAL",
+      "RES-CMU-SEI"
+    ],
+    "out_of_scope": [
+      "IBM-QUANTUM"
+    ],
+    "sites": [
+      "SYN-SITE-RIVER-SWITCH",
+      "SYN-SITE-LOCK-METER"
+    ],
+    "n_participant_flows": 120,
+    "n_spoofed": 49,
+    "recall_before": 0.6471,
+    "recall_after": 0.0,
+    "background_service_rates": {
+      "domain_u": 0.084,
+      "ftp": 0.5015,
+      "http": 0.8067,
+      "private": 0.3537,
+      "smtp": 0.6615,
+      "ssh": 0.1988
+    }
   }
 }

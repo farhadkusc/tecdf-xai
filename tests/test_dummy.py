@@ -41,6 +41,16 @@ class DummyFlowTests(unittest.TestCase):
         self.assertIn("research-center", report["by_class"])
         self.assertIn("national-laboratory", report["by_class"])
 
+    def test_grey_harbor_spoof_cuts_recall(self):
+        scenario = run_dummy()["attack_scenario"]
+        self.assertEqual(scenario["exercise_id"], "SYN-EXERCISE-GREY-HARBOR")
+        self.assertEqual(scenario["spoofed_service"], "domain_u")
+        self.assertGreater(scenario["n_spoofed"], 0)
+        self.assertGreater(scenario["recall_before"], scenario["recall_after"])
+        self.assertIn("FED-DOE", scenario["blue_cell"])
+        self.assertNotIn("IBM-QUANTUM", scenario["blue_cell"])
+        self.assertIn("IBM-QUANTUM", scenario["out_of_scope"])
+
     def test_public_evaluation_is_still_nsl_kdd(self):
         public = json.loads((ROOT / "benchmarks" / "results" / "evaluation.json").read_text())
         self.assertTrue(public["dataset"].startswith("NSL-KDD"))
@@ -49,6 +59,7 @@ class DummyFlowTests(unittest.TestCase):
         self.assertEqual(saved["kind"], "synthetic-fixture")
         self.assertEqual(saved["n_flows"], 2120)
         self.assertEqual(saved["n_organizations"], 106)
+        self.assertEqual(saved["attack_scenario"]["exercise_id"], "SYN-EXERCISE-GREY-HARBOR")
 
 
 if __name__ == "__main__":

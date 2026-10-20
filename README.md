@@ -2,7 +2,7 @@
 
 A service-neighborhood explanation for NSL-KDD, with a numeric baseline and a service-rewire attack.
 
-Author: **Md Farhad Kabir**. Package **0.2.1**.
+Author: **Md Farhad Kabir**. Package **0.2.2**.
 
 ## Data
 
@@ -45,6 +45,8 @@ python3 benchmarks/run_dummy.py
 ```
 
 `benchmarks/results/dummy_evaluation.json` is the fixture check. The table above is only the NSL-KDD split.
+
+Grey Harbor (`SYN-EXERCISE-GREY-HARBOR`) spoofs the service field of malicious flows in the blue cell to `domain_u`, a quiet neighborhood. Recall on that slice falls. The adversary and the two sites are fictional. IBM Quantum is out of scope.
 
 ## What this is not
 
