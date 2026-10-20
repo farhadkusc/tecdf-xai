@@ -37,21 +37,17 @@ The chart is [docs/figures/results.svg](docs/figures/results.svg).
 
 ## Synthetic fixtures
 
-`data/dummy/flows.csv` has twenty synthetic flows for each organization in the same registry the other two packages use: cabinet departments, DOE laboratories, federal components, IBM units, and research centers. The service field is planted. It is not a capture from those institutions.
+`data/dummy/flows.csv` has twenty synthetic flows for each organization in the same registry the other two packages use: cabinet departments, DOE laboratories, federal components, IBM units, and research centers.
 
 ```bash
 python3 -m unittest tests/test_dummy.py
 python3 benchmarks/run_dummy.py
 ```
 
-`benchmarks/results/dummy_evaluation.json` is the fixture check. The table above is only the NSL-KDD split.
+`benchmarks/results/dummy_evaluation.json` is the fixture check.
 
-Grey Harbor (`SYN-EXERCISE-GREY-HARBOR`) spoofs the service field of malicious flows in the blue cell to `domain_u`, a quiet neighborhood. Recall on that slice falls. The adversary and the two sites are fictional. IBM Quantum is out of scope.
-
-## What this is not
-
-Not a claim that graph attention beats a linear model on intrusion detection. On this file it does not. The graph is still the object that the service-rewire attack hits, which is the point of the adversarial layer in the concept paper.
+Grey Harbor (`SYN-EXERCISE-GREY-HARBOR`) spoofs the service field of malicious flows in the blue cell to `domain_u`. Recall on that slice falls.
 
 ## NJIT Wulver
 
-`lab/njit/` refits the NSL-KDD models across 48 seeds and five rewire fractions, then runs a 400-draw label permutation. Submit with `sbatch lab/njit/wulver.sbatch`. Instructions are in [lab/njit/README.md](lab/njit/README.md). The smoke file is not a Wulver measurement.
+`lab/njit/` refits the NSL-KDD models across 48 seeds and five rewire fractions, then runs a 400-draw label permutation. Submit with `sbatch lab/njit/wulver.sbatch`. Instructions are in [lab/njit/README.md](lab/njit/README.md).

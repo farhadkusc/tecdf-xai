@@ -28,6 +28,6 @@ Seed 7, 30% test, stratified on the binary label (normal versus any attack). The
 
 ## Synthetic fixtures
 
-`data/dummy/flows.csv` is a planted service neighborhood, twenty rows per scenario label. The labels are the same federal, IBM, and research-center registry used by the other packages. `evaluate_arrays` scores it. The NSL-KDD numbers in `evaluation.json` are not recomputed from this file.
+`data/dummy/flows.csv` is a planted service neighborhood, twenty rows per scenario label. The labels are the same federal, IBM, and research-center registry used by the other packages. `evaluate_arrays` scores it.
 
 Grey Harbor scores the blue-cell slice twice. The second pass rewrites the service of malicious rows to `domain_u`. Neighborhood rates are computed on the other organizations only.

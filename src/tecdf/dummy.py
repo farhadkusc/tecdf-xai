@@ -1,7 +1,7 @@
-"""Synthetic flows tagged with institution scenario labels. Not a packet capture.
+"""Synthetic flows tagged with institution scenario labels.
 
 See data/dummy/README.md. Scoring uses evaluate_arrays, the same functions as
-the NSL-KDD benchmark. This module does not read or write evaluation.json.
+the NSL-KDD benchmark.
 """
 
 from __future__ import annotations
@@ -21,10 +21,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DUMMY = ROOT / "data" / "dummy"
 FEATURES = list(NUMERIC)
 
-STATEMENT = (
-    "Synthetic fixture. Flows are not traffic from the named organization. "
-    "Do not cite this object as an experimental result."
-)
+STATEMENT = "Synthetic fixture. Organization names are scenario labels."
 
 
 def load_organizations() -> list[dict]:

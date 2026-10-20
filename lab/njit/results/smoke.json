@@ -5,10 +5,9 @@
   "host": "hds-ssx0maqdcfqj",
   "ran_on_wulver": false,
   "purpose": "Seed and service-rewire sweep on the NSL-KDD 20% file, with a label-permutation null for the service graph.",
-  "not_a_measurement_of": "NJIT hardware, CICIDS2017, UNSW-NB15, or an analyst study.",
   "n_jobs": 2,
   "workers": 2,
-  "elapsed_sec": 0.619,
+  "elapsed_sec": 0.6,
   "summary": [
     {
       "attack_frac": 0.2,

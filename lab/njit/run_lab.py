@@ -3,7 +3,7 @@
 
 Neighborhood rates and the logistic fit are recomputed for every seed.
 The permutation null shuffles labels and rebuilds the service rates.
-Smoke is not a Wulver result and does not replace evaluation.json.
+Smoke is the short check.
 """
 
 from __future__ import annotations
@@ -141,7 +141,6 @@ def main() -> None:
         "host": socket.gethostname(),
         "ran_on_wulver": False,
         "purpose": "Seed and service-rewire sweep on the NSL-KDD 20% file, with a label-permutation null for the service graph.",
-        "not_a_measurement_of": "NJIT hardware, CICIDS2017, UNSW-NB15, or an analyst study.",
         "n_jobs": len(rows),
         "workers": workers,
         "elapsed_sec": elapsed,

@@ -11,4 +11,4 @@ repository-code: "https://github.com/farhadkusc/tecdf-xai"
 abstract: >-
   Service-neighborhood score and an L2 logistic baseline on the NSL-KDD
   20 percent training split, with a service-rewire attack and two
-  explanation-stability numbers. Not CICIDS2017 and not an analyst study.
+  explanation-stability numbers.

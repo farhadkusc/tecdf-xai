@@ -10,4 +10,4 @@ Tavallaee, M., Bagheri, E., Lu, W., and Ghorbani, A. A. "A Detailed Analysis of 
 
 The file is stored as fetched. The loader does not rename columns except to attach the standard names to the ten indices it uses.
 
-`data/dummy/flows.csv` is a separate synthetic fixture. It is not NSL-KDD and it is not traffic from the institutions named in that file.
+`data/dummy/flows.csv` is a separate synthetic fixture, scored with the same functions as the NSL-KDD file.

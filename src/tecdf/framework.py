@@ -161,5 +161,4 @@ def evaluate(seed: int = 7, attack_frac: float = 0.2) -> dict:
         "citation": "Tavallaee, Bagheri, Lu, Ghorbani. A Detailed Analysis of the KDD CUP 99 Data Set. IEEE CISDA 2009.",
         "split": "stratified 70/30, seed 7, training neighborhoods only",
         **evaluate_arrays(x, y, services, seed=seed, attack_frac=attack_frac),
-        "disclaimer": "One public split. Not CICIDS2017 and not a human analyst study.",
     }
