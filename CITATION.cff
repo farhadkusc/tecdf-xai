@@ -1,13 +1,14 @@
 cff-version: 1.2.0
-title: "TECDF prototype"
-message: "If you use this prototype, please cite it."
+title: "TECDF"
+message: "If you use this software, please cite it."
 type: software
 authors:
   - family-names: Kabir
     given-names: Md Farhad
-version: 0.1.0
-date-released: 2026-10-19
+version: 0.2.0
+date-released: 2026-10-20
 repository-code: "https://github.com/farhadkusc/tecdf-xai"
 abstract: >-
-  Reference prototype of a graph-attention cybersecurity detector with an
-  explanation-stability metric. Synthetic graphs only.
+  Service-neighborhood score and an L2 logistic baseline on the NSL-KDD
+  20 percent training split, with a service-rewire attack and two
+  explanation-stability numbers. Not CICIDS2017 and not an analyst study.

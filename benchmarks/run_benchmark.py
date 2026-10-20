@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage-1/stage-2 evaluation on synthetic flow graphs."""
+"""Evaluate the service graph and the numeric logistic on NSL-KDD 20%."""
 
 from __future__ import annotations
 
@@ -14,38 +14,18 @@ from tecdf.framework import evaluate  # noqa: E402
 
 
 def main() -> None:
-    seeds = (7, 11, 19)
-    rows = []
-    for seed in seeds:
-        ev = evaluate(seed)
-        rows.append({
-            "seed": seed,
-            "n_test": ev.n,
-            "accuracy": round(ev.accuracy, 4),
-            "accuracy_under_edge_attack": round(ev.accuracy_under_edge_attack, 4),
-            "mean_stability_R_e": round(ev.mean_stability, 4),
-            "fidelity_top_beats_bottom": round(ev.mean_fidelity, 4),
-            "sparsity_top3_mass": round(ev.mean_sparsity_top3, 4),
-        })
-    payload = {
-        "disclaimer": (
-            "Synthetic flow graphs with a planted dense core. Not CICIDS2017, "
-            "UNSW-NB15, or a human analyst study."
-        ),
-        "protocol": "50/50 split, edge-flip attack budget 3, feature noise L2=0.15",
-        "runs": rows,
-    }
-    out = ROOT / "benchmarks" / "results" / "stability.json"
+    report = evaluate(seed=7)
+    out = ROOT / "benchmarks" / "results" / "evaluation.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(payload, indent=2) + "\n")
-    print(f"{'seed':>6} {'acc':>8} {'acc@atk':>8} {'R_e':>8} {'fidelity':>9} {'top3':>8}")
-    for r in rows:
-        print(
-            f"{r['seed']:6d} {r['accuracy']:8.3f} {r['accuracy_under_edge_attack']:8.3f} "
-            f"{r['mean_stability_R_e']:8.3f} {r['fidelity_top_beats_bottom']:9.3f} "
-            f"{r['sparsity_top3_mass']:8.3f}"
-        )
-    print(f"\nWrote {out}")
+    out.write_text(json.dumps(report, indent=2) + "\n")
+    g = report["graph_service_neighborhood"]
+    a = report["graph_after_service_rewire"]
+    n = report["numeric_logistic"]
+    print(f"graph acc {g['accuracy']:.3f} F1 {g['f1']:.3f} AP {g['average_precision']:.3f}")
+    print(f"logistic acc {n['accuracy']:.3f} F1 {n['f1']:.3f} AP {n['average_precision']:.3f}")
+    print(f"graph after 20% service rewire acc {a['accuracy']:.3f}")
+    print(f"explanation cosine {report['explanation_cosine_stability']:.3f}  paper R_e {report['explanation_paper_R_e']:.3f}")
+    print(f"wrote {out}")
 
 
 if __name__ == "__main__":

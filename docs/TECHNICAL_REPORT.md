@@ -1,26 +1,27 @@
-# TECDF technical report
+# Technical report
 
-**Package version:** 0.1.0  
-**Author:** Md Farhad Kabir
+**Version 0.2.0.** Author: Md Farhad Kabir.
 
-## Detector
+## Graph
 
-Node state is a mix of its own features and the mean of its out-neighbors. A learned query produces a softmax attention distribution over nodes. The graph vector is the attention-weighted sum of node states. A linear head maps that vector to a malicious/benign probability.
+Each flow is a node. Training flows that share `service` are its neighborhood. The graph score is the fraction of that neighborhood labeled attack. Services unseen in training get the training base rate.
 
-Stage 1 alternates clean graphs and 2-edge insertions, matching the inner-max / outer-min shape of adversarial training at a scale that runs without a GPU. The query is updated by a short accept/reject search so the explanation is not an untrained uniform vector. Stage 2 does not update the detector. Fidelity and stability are measurements, not a second loss that is back-propagated. That split is the two-stage strategy in the concept paper.
+The numeric model uses, in KDD order: duration, src_bytes, dst_bytes, count, srv_count, serror_rate, same_srv_rate, dst_host_count, dst_host_srv_count, dst_host_serror_rate. Inputs are `log1p`. Coefficients in the results file are on the standardized scale.
 
-## Stability
+## Attack
+
+A graph-structure attack in this dataset is a lie about service, because service is the edge relation. Rewiring 20% of test nodes to a uniformly chosen other known service drops accuracy from 0.913 to 0.827 and average precision from 0.948 to 0.644. Accuracy understates the attack: many rewired flows are still on the correct side of 0.5, but the ranking is much worse. The logistic model does not use service, so this particular attack is not aimed at it. The majority-class accuracy on the same test split is 0.534 (always normal).
+
+## Explanation
+
+The attribution vector is the standardized numeric features times the logistic weights. Cosine stability is the mean cosine between that vector and the same vector after isotropic Gaussian noise of scale 0.15. \(R_e\) uses
 
 \[
-R_e(x) = 1 - \frac{\|g(x) - g(x+\delta)\|_2}{\|\delta\|_2 + \epsilon_0}
+R_e = 1 - \frac{\|a - a'\|_2}{\|\delta\|_2 + \epsilon}
 \]
 
-with \(\epsilon_0 = 10^{-6}\) and \(\|\delta\|_2 = 0.15\). Values are clipped to \([0, 1]\).
+clipped to [0, 1]. Mean \(R_e\) is 0.118 because the weight vector amplifies some coordinates and the ratio saturates. It is reported so the formula can be compared with the cosine on the same noise draw.
 
-## Data
+## Split
 
-Each graph has 12 nodes. Malicious graphs contain a 4-node clique and a shift on feature 0 of those nodes. Benign graphs are Erdős–Rényi at edge probability 0.18. The test above 0.5 accuracy is whether the head learned that core, not a claim about network intrusion detection.
-
-## Not included
-
-SHAP, LIME, human triage timing, and the public intrusion corpora named in the concept paper. Add those in a later evaluation harness; keep this file's JSON labeled synthetic.
+Seed 7, 30% test, stratified on the binary label (normal versus any attack). There is no second external test file in this package; the official NSL-KDD test split is a known distribution shift and is not claimed here.

@@ -1,0 +1,60 @@
+{
+  "dataset": "NSL-KDD KDDTrain+_20Percent",
+  "source": "https://github.com/tuanio/nsl_kdd (20% training split of the UNB NSL-KDD release)",
+  "citation": "Tavallaee, Bagheri, Lu, Ghorbani. A Detailed Analysis of the KDD CUP 99 Data Set. IEEE CISDA 2009.",
+  "split": "stratified 70/30, seed 7, training neighborhoods only",
+  "n_rows": 25192,
+  "n_train": 17634,
+  "n_test": 7558,
+  "test_attack_rate": 0.4661,
+  "majority_class_accuracy": 0.5339,
+  "graph_service_neighborhood": {
+    "accuracy": 0.9131,
+    "precision": 0.9372,
+    "recall": 0.872,
+    "f1": 0.9034,
+    "average_precision": 0.9481
+  },
+  "numeric_logistic": {
+    "accuracy": 0.9451,
+    "precision": 0.9507,
+    "recall": 0.9305,
+    "f1": 0.9405,
+    "average_precision": 0.9789
+  },
+  "graph_after_service_rewire": {
+    "accuracy": 0.8265,
+    "precision": 0.7862,
+    "recall": 0.8623,
+    "f1": 0.8225,
+    "average_precision": 0.6439,
+    "fraction_rewired": 0.2
+  },
+  "explanation_cosine_stability": 0.9703,
+  "explanation_paper_R_e": 0.1177,
+  "feature_names": [
+    "duration",
+    "src_bytes",
+    "dst_bytes",
+    "count",
+    "srv_count",
+    "serror_rate",
+    "same_srv_rate",
+    "dst_host_count",
+    "dst_host_srv_count",
+    "dst_host_serror_rate"
+  ],
+  "logistic_weights_standardized": {
+    "duration": 0.0712,
+    "src_bytes": -0.3873,
+    "dst_bytes": -1.2414,
+    "count": 0.7204,
+    "srv_count": 0.3068,
+    "serror_rate": 0.387,
+    "same_srv_rate": -0.7519,
+    "dst_host_count": -0.3953,
+    "dst_host_srv_count": -0.8926,
+    "dst_host_serror_rate": 0.4085
+  },
+  "disclaimer": "One public split. Not CICIDS2017 and not a human analyst study."
+}

@@ -1,39 +1,40 @@
 # TECDF
 
-Trustworthy Explainable Cybersecurity Decision Framework. Graph attention detection, two-stage training, and an explanation-stability metric for critical-infrastructure decision systems.
+A service-neighborhood explanation for NSL-KDD, with a numeric baseline and a service-rewire attack.
 
-Author: **Md Farhad Kabir**
+Author: **Md Farhad Kabir**. Package **0.2.0**.
 
-## Package
+## Data
 
-| Path | Role |
-| --- | --- |
-| `src/tecdf/framework.py` | Synthetic flow graphs, attention pool, edge-flip attack, Stage-1 trainer, \(R_e\) stability |
-| `benchmarks/run_benchmark.py` | Three seeds, writes `benchmarks/results/stability.json` |
-| `docs/TECHNICAL_REPORT.md` | Metric definitions and limits |
-| `docs/ARCHITECTURE.md` | Five layers and what this package implements |
-| `tests/test_framework.py` | Stability bounds and a learning check |
+`data/raw/KDDTrain+_20Percent.txt` is the 20% NSL-KDD training split (25,192 flows), fetched 2026-10-19 from the public mirror `tuanio/nsl_kdd`. The column order is the standard 41 KDD features, the attack label, and the difficulty score. Cite Tavallaee, Bagheri, Lu, and Ghorbani, IEEE CISDA 2009, if you use the set. This is not CICIDS2017, UNSW-NB15, or an analyst study.
 
-## Run
+## Models
+
+Stratified 70/30 split, seed 7. Neighborhood rates are computed on the training split only.
+
+- **Graph.** A flow's score is the attack rate of its service among training flows. That is a one-line neighborhood aggregate, which is the graph the service field actually induces.
+- **Logistic.** L2 logistic regression on ten `log1p` numeric features (duration, bytes, count, error rates, host counts). Weights are in the results JSON.
+- **Attack.** Twenty percent of test flows are moved to a different service. Their graph score changes because their neighborhood changes. Labels do not.
+
+| Model | Accuracy | F1 | Average precision |
+| --- | ---: | ---: | ---: |
+| Always-normal majority | 0.534 | — | — |
+| Service neighborhood | 0.913 | 0.903 | 0.948 |
+| Numeric logistic | 0.945 | 0.941 | 0.979 |
+| Neighborhood after 20% service rewire | 0.827 | 0.823 | 0.644 |
+
+Always predicting normal, the majority class, is 0.534 accuracy on this stratified test split. Both models clear that. The numeric model wins on accuracy, F1, and average precision. A partial service rewire costs about 8.6 accuracy points and, more sharply, drops average precision from 0.948 to 0.644. That ranking collapse is the graph-structure attack. Explanation cosine stability under N(0, 0.15) noise on the numeric features is 0.970. The paper's \(R_e\), using the raw L2 gap of attribution vectors over the noise norm, is 0.118 on the same draw. Both are reported. The cosine stays informative when attribution weights are larger than the noise; \(R_e\) is the formula in the concept paper and it saturates here.
+
+## Reproduce
 
 ```bash
-python3 -m pip install -r requirements.txt
 python3 -m unittest tests/test_framework.py
 python3 benchmarks/run_benchmark.py
+python3 benchmarks/plot_results.py
 ```
 
-## Metrics
+The chart is [docs/figures/results.svg](docs/figures/results.svg).
 
-- **Accuracy** on held-out synthetic graphs.
-- **Accuracy under edge attack.** Up to 3 added edges. This is the graph-structure threat in the concept paper, at a fixed budget.
-- **Stability \(R_e\).** Attention L2 change under an L2 feature perturbation of size 0.15.
-- **Fidelity.** Fraction of test graphs where deleting the highest-attention node moves the probability at least as much as deleting the lowest-attention node.
-- **Sparsity.** Attention mass on the top 3 nodes.
+## What this is not
 
-## Honest scope
-
-No CICIDS2017, UNSW-NB15, or analyst study is in this repository. The five-layer architecture (detection, explanation, human oversight, audit, adversarial resilience) is described in `docs/ARCHITECTURE.md`. The code implements detection, explanation, and the resilience metric. Oversight and audit are specified, not staffed.
-
-## License
-
-MIT. See `LICENSE`.
+Not a claim that graph attention beats a linear model on intrusion detection. On this file it does not. The graph is still the object that the service-rewire attack hits, which is the point of the adversarial layer in the concept paper.
